@@ -3,12 +3,12 @@ type OfferCardProps = {
 	imgUrl: string;
 	cost: number;
 	dayOrNight: string;
-	isBookmarks: string;
+	isBookmarks: boolean;
 	name: string;
 	typeOfApartment: string;
 }
 
-function OfferCard({isPremium, imgUrl, cost, dayOrNight, isBookmarks, name, typeOfApartment} : OfferCardProps) {
+function OfferCard({isPremium, imgUrl, cost, dayOrNight, isBookmarks, name, typeOfApartment} : OfferCardProps): JSX.Element {
 	return (
 		<article className="cities__card place-card">
 		{isPremium ?
@@ -27,11 +27,11 @@ function OfferCard({isPremium, imgUrl, cost, dayOrNight, isBookmarks, name, type
 				<b className="place-card__price-value">&euro;{cost}</b>
 				<span className="place-card__price-text">&#47;&nbsp;{dayOrNight}</span>
 			</div>
-			<button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+			<button className={`place-card__bookmark-button button ${isBookmarks ? 'place-card__bookmark-button--active' : ''}`} type="button">
 				<svg className="place-card__bookmark-icon" width="18" height="19">
 				<use xlinkHref="#icon-bookmark"></use>
 				</svg>
-				<span className="visually-hidden">{isBookmarks}</span>
+				<span className="visually-hidden">{isBookmarks ? 'In bookmarks' : 'To bookmarks'}</span>
 			</button>
 		</div>
 			<div className="place-card__rating rating">

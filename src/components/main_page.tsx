@@ -1,5 +1,5 @@
 import OfferCard from "./offer_card";
-
+import Logo from './logo';
 function MainPage() :JSX.Element {
 	return (
 		<body>
@@ -12,9 +12,7 @@ function MainPage() :JSX.Element {
 				<div className="container">
 				<div className="header__wrapper">
 					<div className="header__left">
-					<a className="header__logo-link header__logo-link--active">
-						<img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-					</a>
+					<Logo />
 					</div>
 					<nav className="header__nav">
 					<ul className="header__nav-list">
@@ -101,7 +99,7 @@ function MainPage() :JSX.Element {
 							imgUrl = {"../markup/img/apartment-01.jpg"}
 							cost = {120}
 							dayOrNight={"night"}
-							isBookmarks={"To bookmarks"}
+							isBookmarks={false}
 							name = {`Beautiful luxurious apartment at great location`}
 							typeOfApartment={"Apartment"}
 						/>
@@ -111,7 +109,7 @@ function MainPage() :JSX.Element {
 							imgUrl = {"../markup/img/room.jpg"}
 							cost = {80}
 							dayOrNight={"night"}
-							isBookmarks={"In bookmarks"}
+							isBookmarks={true}
 							name = {`Wood and stone place`}
 							typeOfApartment={"Private room"}
 						/>
@@ -121,7 +119,7 @@ function MainPage() :JSX.Element {
 							imgUrl = {"../markup/img/apartment-02.jpg"}
 							cost = {132}
 							dayOrNight={"night"}
-							isBookmarks={"To bookmarks"}
+							isBookmarks={false}
 							name = {`Canal View Prinsengracht`}
 							typeOfApartment={"Apartment"}
 						/>
@@ -131,7 +129,7 @@ function MainPage() :JSX.Element {
 							imgUrl = {"../markup/img/apartment-03.jpg"}
 							cost = {180}
 							dayOrNight={"night"}
-							isBookmarks={"To bookmarks"}
+							isBookmarks={false}
 							name = {`Nice, cozy, warm big bed apartment`}
 							typeOfApartment={"Apartment"}
 						/>
@@ -141,7 +139,7 @@ function MainPage() :JSX.Element {
 							imgUrl = {"../markup/img/room.jpg"}
 							cost = {80}
 							dayOrNight={"night"}
-							isBookmarks={"In bookmarks"}
+							isBookmarks={true}
 							name = {`Wood and stone place`}
 							typeOfApartment={"Private room"}
 						/>
