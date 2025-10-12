@@ -2,19 +2,23 @@ import MainPage from "./main_page";
 import Login from './login'
 import Favorites from "./favorites";
 import ErrorPage from "./error_page";
-import OfferCard from "./offer_card";
+import Property from "./property.tsx";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import AppRoute from "../routes";
 import PrivateRoute from "../private-route";
 import AuthorizationStatus from "../private-routes";
+import Offer from "../types/offer.ts";
 
-function App(): JSX.Element {
+interface AppProps {
+	offers: Offer[];
+}
+function App({offers}: AppProps): JSX.Element {
 	return(
 		<BrowserRouter>
 			<Routes>
 				<Route 
 					path={AppRoute.Main}
-					element={<MainPage />}
+					element={<MainPage offers={offers} />}
 				/>
 				<Route 
 					path={AppRoute.Login}
@@ -26,7 +30,7 @@ function App(): JSX.Element {
 						<PrivateRoute
 							authorizationStatus={AuthorizationStatus.NoAuth}
 						>
-							<Favorites />
+							<Favorites offers={offers}/>
 							
 
 						</PrivateRoute>
@@ -34,8 +38,8 @@ function App(): JSX.Element {
 
 				/>
 				<Route 
-					path={AppRoute.Offer}
-					element={<OfferCard isPremium={false} imgUrl={""} cost={0} dayOrNight={""} isBookmarks={false} name={""} typeOfApartment={""} />}
+					path={`${AppRoute.Offer}/:id`}
+					element={<Property offers={offers} />}
 				/>
 				<Route 
 					path='*'

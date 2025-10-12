@@ -1,9 +1,24 @@
-import OfferCard from "./offer_card";
+import {useState} from 'react'
 import Logo from './logo';
-function MainPage() :JSX.Element {
-	return (
+import Offer from "../types/offer";
+import OfferList from "./offers_list";
+interface MainPageProps {
+	offers: Offer[];
+}
+function MainPage({offers}: MainPageProps) :JSX.Element {
+	const favoriteOffers = offers.filter(offer => offer.isBookmarks);
+	const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
+
+	const handleOfferMouseEnter = (id: number) => {
+		setActiveOfferId(id);
+	}
+
+	const handleOfferMouseLeave = () => {
+		setActiveOfferId(null);
+	}
+ 	return (
 		<body>
-			<div className="display: none">
+			<div style={{display: "none"}}>
 			<svg xmlns="http://www.w3.org/2000/svg"><symbol id="icon-arrow-select" viewBox="0 0 7 4"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"></path></symbol><symbol id="icon-bookmark" viewBox="0 0 17 18"><path d="M3.993 2.185l.017-.092V2c0-.554.449-1 .99-1h10c.522 0 .957.41.997.923l-2.736 14.59-4.814-2.407-.39-.195-.408.153L1.31 16.44 3.993 2.185z"></path></symbol><symbol id="icon-star" viewBox="0 0 13 12"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"></path></symbol></svg>
 			</div>
 
@@ -21,7 +36,7 @@ function MainPage() :JSX.Element {
 							<div className="header__avatar-wrapper user__avatar-wrapper">
 							</div>
 							<span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-							<span className="header__favorite-count">3</span>
+							<span className="header__favorite-count">{favoriteOffers.length}</span>
 						</a>
 						</li>
 						<li className="header__nav-item">
@@ -86,7 +101,7 @@ function MainPage() :JSX.Element {
 							<use xlinkHref="#icon-arrow-select"></use>
 						</svg>
 						</span>
-						<ul className="places__options places__options--custom places__options--opened">
+						<ul className="places__options places__options--custom places__options--closed">
 						<li className="places__option places__option--active" tabIndex={0}>Popular</li>
 						<li className="places__option" tabIndex={0}>Price: low to high</li>
 						<li className="places__option" tabIndex={0}>Price: high to low</li>
@@ -94,54 +109,9 @@ function MainPage() :JSX.Element {
 						</ul>
 					</form>
 					<div className="cities__places-list places__list tabs__content">
-						<OfferCard
-							isPremium = {true}
-							imgUrl = {"../markup/img/apartment-01.jpg"}
-							cost = {120}
-							dayOrNight={"night"}
-							isBookmarks={false}
-							name = {`Beautiful luxurious apartment at great location`}
-							typeOfApartment={"Apartment"}
-						/>
-
-						<OfferCard
-							isPremium = {false}
-							imgUrl = {"../markup/img/room.jpg"}
-							cost = {80}
-							dayOrNight={"night"}
-							isBookmarks={true}
-							name = {`Wood and stone place`}
-							typeOfApartment={"Private room"}
-						/>
-
-						<OfferCard
-							isPremium = {false}
-							imgUrl = {"../markup/img/apartment-02.jpg"}
-							cost = {132}
-							dayOrNight={"night"}
-							isBookmarks={false}
-							name = {`Canal View Prinsengracht`}
-							typeOfApartment={"Apartment"}
-						/>
-
-						<OfferCard
-							isPremium = {true}
-							imgUrl = {"../markup/img/apartment-03.jpg"}
-							cost = {180}
-							dayOrNight={"night"}
-							isBookmarks={false}
-							name = {`Nice, cozy, warm big bed apartment`}
-							typeOfApartment={"Apartment"}
-						/>
-
-						<OfferCard
-							isPremium = {false}
-							imgUrl = {"../markup/img/room.jpg"}
-							cost = {80}
-							dayOrNight={"night"}
-							isBookmarks={true}
-							name = {`Wood and stone place`}
-							typeOfApartment={"Private room"}
+						<OfferList offers={offers}
+							onOfferMouseEnter={handleOfferMouseEnter}
+							onOfferMouseLeave={handleOfferMouseLeave}
 						/>
 					</div>
 					</section>
