@@ -13,7 +13,7 @@ type OfferCardProps = {
 	onMouseLeave?: () => void;
 }
 
-function OfferCard({id,isPremium, imgUrl, cost, dayOrNight, isBookmarks, name, typeOfApartment} : OfferCardProps): JSX.Element {
+function OfferCard({id,isPremium, imgUrl, cost, dayOrNight, isBookmarks, name, typeOfApartment, onMouseEnter, onMouseLeave} : OfferCardProps): JSX.Element {
 	const [isBookmarked, setBookMark] = useState(isBookmarks);
 
 	const handleBookMarkClick = () => {
@@ -21,7 +21,9 @@ function OfferCard({id,isPremium, imgUrl, cost, dayOrNight, isBookmarks, name, t
 	}
 	
 	return (
-		<article className="cities__card place-card">
+		<article className="cities__card place-card"
+				 onMouseEnter={onMouseEnter}
+				 onMouseLeave={onMouseLeave}>
 		{isPremium ?
 			<div className="place-card__mark">
 				<span>Premium</span>

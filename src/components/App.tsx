@@ -9,6 +9,7 @@ import PrivateRoute from "../private-route";
 import AuthorizationStatus from "../private-routes";
 import Offer from "../types/offer.ts";
 
+
 interface AppProps {
 	offers: Offer[];
 }

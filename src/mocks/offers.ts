@@ -10,6 +10,8 @@ export const offers: Offer[] = [
 			isBookmarks: true,
 			name: `Beautiful luxurious apartment at great location`,
 			typeOfApartment: "Apartment",
+			latitude: 52.3909553943508,
+			longitude: 4.85309666406198
 		},
 		{
 			id: 2,
@@ -19,7 +21,9 @@ export const offers: Offer[] = [
 			dayOrNight: "night",
 			isBookmarks: true,
 			name: `Wood and stone place`,
-			typeOfApartment:"Private room"
+			typeOfApartment:"Private room",
+			latitude: 52.3609553943508,
+			longitude: 4.85309666406198
 		},
 		{
 			id: 3,
@@ -29,7 +33,9 @@ export const offers: Offer[] = [
 			dayOrNight: "night",
 			isBookmarks: false,
 			name: `Canal View Prinsengracht`,
-			typeOfApartment:"Apartment"
+			typeOfApartment:"Apartment",
+			latitude: 52.3909553943508,
+			longitude: 4.929309666406198
 		},
 		{
 			id: 4,
@@ -39,8 +45,11 @@ export const offers: Offer[] = [
 			dayOrNight: "night",
 			isBookmarks: false,
 			name: `Nice, cozy, warm big bed apartment`,
-			typeOfApartment:"Apartment"
+			typeOfApartment:"Apartment",
+			latitude: 52.3809553943508,
+			longitude: 4.939309666406198
 		}
 	]
 
 
+export default offers;

@@ -7,6 +7,8 @@ type Offer = {
 	isBookmarks: boolean;
 	name: string;
 	typeOfApartment: string;
+	latitude: number;
+	longitude: number;
 }
 
 export default Offer;
