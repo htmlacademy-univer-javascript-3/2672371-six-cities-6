@@ -1,54 +1,28 @@
 import {useParams, Navigate} from 'react-router-dom';
-import { useState, FormEvent } from 'react';
-import Offer from '../types/offer';
+import Offer from '../types/offer.ts';
 import { Link } from 'react-router-dom';
+import {city} from "../mocks/cities.ts";
+import ListOfReviews from './list_of_reviews.tsx';
+import MapOfferCard from './map_offer_card.tsx';
+import OfferCardNearby from './offer_card_nearby.tsx';
+
 interface PropertyProps {
 	offers: Offer[];
 }
-interface ReviewForm {
-	rating: number;
-	comment: string;
-}
+
 function Property({offers}: PropertyProps): JSX.Element {
 
-	const [commentState, setComment] = useState<boolean>(false);
-	const [reviewForm, setReviewForm] = useState<ReviewForm>({
-		rating: 0,
-		comment:''
-	});
-
-	const commentLength = reviewForm.comment.length;
-	const isFormValid = reviewForm.rating > 0 && reviewForm.comment.length > 50;
-
-	const handleRatingChange = (event: FormEvent<HTMLInputElement>) => {
-		setReviewForm({
-			...reviewForm,
-			rating: parseInt(event.currentTarget.value)
-		});
-	};
-
-	const handleCommentChange = (event: FormEvent<HTMLTextAreaElement>) => {
-		setReviewForm({
-			...reviewForm,
-			comment: event.currentTarget.value
-		});
-	};
-
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault;
-		console.log('Отправка комментария: ', reviewForm);
-		setReviewForm({
-			rating: 0,
-			comment: ''
-		});
-		setComment(false);
-	}
 	const {id} = useParams<{id: string}>()
 	const offer = offers.find(item => item.id === parseInt(id || ''));
 
 	if (!offer){
 		return <Navigate to='/404' />
 	}
+	
+	const nearOffers = offers
+		.filter(o => o.id !== offer.id)
+		.slice(0, 3);
+
 	return(
 		<div className="page">
 		<div style={{ display: 'none' }}>
@@ -91,9 +65,10 @@ function Property({offers}: PropertyProps): JSX.Element {
 				</ul>
 				</nav>
 			</div>
+			
 			</div>
 		</header>
-
+		
 		<main className="page__main page__main--offer">
 			<section className="offer">
 			<div className="offer__gallery-container container">
@@ -193,113 +168,12 @@ function Property({offers}: PropertyProps): JSX.Element {
 					</p>
 					</div>
 				</div>
-				<section className="offer__reviews reviews">
-					<h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-					<ul className="reviews__list">
-					<li className="reviews__item">
-						<div className="reviews__user user">
-						<div className="reviews__avatar-wrapper user__avatar-wrapper">
-							<img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
-						</div>
-						<span className="reviews__user-name">Max</span>
-						</div>
-						<div className="reviews__info">
-						<div className="reviews__rating rating">
-							<div className="reviews__stars rating__stars">
-							<span style={{ width: '80%' }}></span>
-							<span className="visually-hidden">Rating</span>
-							</div>
-						</div>
-						<p className="reviews__text">
-							A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-						</p>
-						<time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-						</div>
-					</li>
-					</ul>
-					<form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
-					<label className="reviews__label form__label" htmlFor="review">Your review</label>
-					<div className="reviews__rating-form form__rating">
-						{[5,4,3,2,1].map((star) => (
-							<>
-						
-						<input key={`input-${star}`} className="form__rating-input visually-hidden" name="rating" value={star} id={`${star}-stars`} type="radio" checked={reviewForm.rating === star} onChange={handleRatingChange}/>
-						<label key={`label-${star}`} htmlFor={`${star}-stars`} className="reviews__rating-label form__rating-label" title={[
-									'terribly',
-									'badly', 
-									'not bad', 
-									'good', 
-									'perfect'
-								][star - 1]}>
-						<svg className="form__star-image" width="37" height="33">
-							<use xlinkHref="#icon-star"></use>
-						</svg>
-						</label>
-						</>
-						))}
-					</div>
-					<textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={reviewForm.comment} onChange={handleCommentChange}></textarea>
-					<div className="reviews__button-wrapper">
-						<p className="reviews__help">
-						To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-						</p>
-						<br />
-						<small>Current: {commentLength}/50 characters</small>
-						<button className="reviews__submit form__submit button" type="submit" disabled={!isFormValid}>Submit</button>
-					</div>
-					</form>
-				</section>
+				<ListOfReviews />
 				</div>
 			</div>
-			<section className="offer__map map"></section>
+			<MapOfferCard city={city[0]} points={nearOffers} />
 			</section>
-			<div className="container">
-			<section className="near-places places">
-				<h2 className="near-places__title">Other places in the neighbourhood</h2>
-				<div className="near-places__list places__list">
-				{offers.filter(o => o.id !== offer.id).slice(0, 3).map(nearOffer => (
-					<article key={nearOffer.id} className="near-places__card place-card">
-					{nearOffer.isPremium && (
-						<div className="place-card__mark">
-						<span>Premium</span>
-						</div>
-					)}
-					<div className="near-places__image-wrapper place-card__image-wrapper">
-						<a href="#">
-						<img className="place-card__image" src={nearOffer.imgUrl} width="260" height="200" alt="Place image"/>
-						</a>
-					</div>
-					<div className="place-card__info">
-						<div className="place-card__price-wrapper">
-						<div className="place-card__price">
-							<b className="place-card__price-value">&euro;{nearOffer.cost}</b>
-							<span className="place-card__price-text">&#47;&nbsp;{nearOffer.dayOrNight}</span>
-						</div>
-						<button className={`place-card__bookmark-button button ${nearOffer.isBookmarks ? 'place-card__bookmark-button--active' : ''}`} type="button">
-							<svg className="place-card__bookmark-icon" width="18" height="19">
-							<use xlinkHref="#icon-bookmark"></use>
-							</svg>
-							<span className="visually-hidden">
-							{nearOffer.isBookmarks ? 'In bookmarks' : 'To bookmarks'}
-							</span>
-						</button>
-						</div>
-						<div className="place-card__rating rating">
-						<div className="place-card__stars rating__stars">
-							<span style={{ width: '80%' }}></span>
-							<span className="visually-hidden">Rating</span>
-						</div>
-						</div>
-						<h2 className="place-card__name">
-						<a href="#">{nearOffer.name}</a>
-						</h2>
-						<p className="place-card__type">{nearOffer.typeOfApartment}</p>
-					</div>	
-					</article>
-				))}
-				</div>
-			</section>
-			</div>
+			<OfferCardNearby offers={offers}/>
 		</main>
 		</div>
 	);
