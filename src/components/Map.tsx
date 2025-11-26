@@ -5,6 +5,7 @@ import {useMap} from '../hooks/useMap'
 import Offer from '../types/offer'
 interface MapProps {
 	city: {
+		name: string;
 		latitude: number;
 		longitude: number;
 	}
@@ -30,7 +31,12 @@ function Map({city, points, activePoint}: MapProps): JSX.Element {
 		iconSize: [40,40],
 		iconAnchor: [20,40]
 	}), [])
-
+	useEffect(() => {
+		if (map) {
+			map.setView([city.latitude, city.longitude], map.getZoom());
+		}
+	}, [map, city])
+	
 	useEffect (() => {
 		if (map) {
 			map.eachLayer((layer) => {

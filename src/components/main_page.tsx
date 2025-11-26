@@ -4,17 +4,28 @@ import Offer from "../types/offer";
 import OfferList from "./offers_list";
 import Map from "./Map.tsx";
 import {city} from "../mocks/cities.ts";
-
+import { State } from '../types/state.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeCity } from '../store/action.ts';
 
 interface MainPageProps {
 	offers: Offer[];
 }
 function MainPage({offers}: MainPageProps) :JSX.Element {
-	const favoriteOffers = offers.filter(offer => offer.isBookmarks);
+	const dispatch = useDispatch();
+	const {city: currentCity, offerList} = useSelector((state: State) => state.offers);
+
+	const favoriteOffers = offerList.filter(offer => offer.isBookmarks);
 	const [activePoint, setActivePoint] = useState<{name: string, latitude: number; longitude: number} | null>(null)
 
+	const handleCityClick = (cityName: string) => {
+		const selectedCity = city.find(c => c.name === cityName);
+		if (selectedCity) {
+			dispatch(changeCity(selectedCity))
+		}
+	}
 	const handleOfferMouseEnter = (id: number) => {
-		const offer = offers.find(offer => offer.id === id);
+		const offer = offerList.find(offer => offer.id === id);
 		if (offer) {	
 			console.log(`Active offer: ${offer.id}`)
 			setActivePoint({
@@ -26,10 +37,11 @@ function MainPage({offers}: MainPageProps) :JSX.Element {
 	}
 
 	const handleOfferMouseLeave = () => {
-		console.log(`Not active offer: ${offers}`)
+		console.log(`Not active offer: ${offerList.length}`)
 		setActivePoint(null);
 	}
 
+	const hasOffers = offerList.length > 0;
 	return (
 		<>
 			<div style={{display: "none"}}>
@@ -69,44 +81,31 @@ function MainPage({offers}: MainPageProps) :JSX.Element {
 				<div className="tabs">
 				<section className="locations container">
 					<ul className="locations__list tabs__list">
-					<li className="locations__item">
-						<a className="locations__item-link tabs__item" href="#">
-						<span>Paris</span>
-						</a>
-					</li>
-					<li className="locations__item">
-						<a className="locations__item-link tabs__item" href="#">
-						<span>Cologne</span>
-						</a>
-					</li>
-					<li className="locations__item">
-						<a className="locations__item-link tabs__item" href="#">
-						<span>Brussels</span>
-						</a>
-					</li>
-					<li className="locations__item">
-						<a className="locations__item-link tabs__item tabs__item--active">
-						<span>Amsterdam</span>
-						</a>
-					</li>
-					<li className="locations__item">
-						<a className="locations__item-link tabs__item" href="#">
-						<span>Hamburg</span>
-						</a>
-					</li>
-					<li className="locations__item">
-						<a className="locations__item-link tabs__item" href="#">
-						<span>Dusseldorf</span>
-						</a>
-					</li>
+					{city.map((cityItem) => (
+                  <li key={cityItem.name} className="locations__item">
+                    <a 
+                      className={`locations__item-link tabs__item ${
+                        currentCity.name === cityItem.name ? 'tabs__item--active' : ''
+                      }`}
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCityClick(cityItem.name);
+                      }}
+                    >
+                      <span>{cityItem.name}</span>
+                    </a>
+                  </li>
+                ))}
 					</ul>
 				</section>
 				</div>
 				<div className="cities">
 				<div className="cities__places-container container">
-					<section className="cities__places places">
+					{hasOffers ? (
+						<section className="cities__places places">
 					<h2 className="visually-hidden">Places</h2>
-					<b className="places__found">312 places to stay in Amsterdam</b>
+					<b className="places__found">{offerList.length} places to stay in {currentCity.name}</b>
 					<form className="places__sorting" action="#" method="get">
 						<span className="places__sorting-caption">Sort by</span>
 						<span className="places__sorting-type" tabIndex={0}>
@@ -123,14 +122,24 @@ function MainPage({offers}: MainPageProps) :JSX.Element {
 						</ul>
 					</form>
 					<div className="cities__places-list places__list tabs__content">
-						<OfferList offers={offers}
+						<OfferList offers={offerList}
 							onOfferMouseEnter={handleOfferMouseEnter}
 							onOfferMouseLeave={handleOfferMouseLeave}
 						/>
 					</div>
 					</section>
+					) : (<section className="cities__no-places">
+								<div className="cities__status-wrapper tabs__content">
+									<b className="cities__status">No places to stay available</b>
+									<p className="cities__status-description">
+										We could not find any property available at the moment in {currentCity.name}
+									</p>
+								</div>
+							</section>
+					)}
+					
 					<div className="cities__right-section">
-						<Map city={city[0]} points={offers} activePoint={activePoint}/>
+						<Map city={currentCity} points={offers} activePoint={activePoint}/>
 					</div>
 				</div>
 				</div>

@@ -5,24 +5,26 @@ import {city} from "../mocks/cities.ts";
 import ListOfReviews from './list_of_reviews.tsx';
 import MapOfferCard from './map_offer_card.tsx';
 import OfferCardNearby from './offer_card_nearby.tsx';
-
+import { useSelector } from 'react-redux';
+import { State } from '../types/state.ts';
+import OfferCard from './offer_card.tsx';
 interface PropertyProps {
 	offers: Offer[];
 }
 
 function Property({offers}: PropertyProps): JSX.Element {
+	const {city: currentCity, offerList} = useSelector((state: State) => state.offers);
 
 	const {id} = useParams<{id: string}>()
-	const offer = offers.find(item => item.id === parseInt(id || ''));
+	const offer = offerList.find(item => item.id === parseInt(id || ''));
 
 	if (!offer){
 		return <Navigate to='/404' />
 	}
 	
-	const nearOffers = offers
+	const nearOffers = offerList
 		.filter(o => o.id !== offer.id)
 		.slice(0, 3);
-
 	return(
 		<div className="page">
 		<div style={{ display: 'none' }}>
@@ -171,9 +173,9 @@ function Property({offers}: PropertyProps): JSX.Element {
 				<ListOfReviews />
 				</div>
 			</div>
-			<MapOfferCard city={city[0]} points={nearOffers} />
+			<MapOfferCard city={currentCity} points={nearOffers} />
 			</section>
-			<OfferCardNearby offers={offers}/>
+			<OfferCardNearby offers={offerList}/>
 		</main>
 		</div>
 	);
