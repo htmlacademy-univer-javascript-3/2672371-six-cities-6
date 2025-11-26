@@ -11,7 +11,8 @@ export const offers: Offer[] = [
 			name: `Beautiful luxurious apartment at great location`,
 			typeOfApartment: "Apartment",
 			latitude: 52.3909553943508,
-			longitude: 4.85309666406198
+			longitude: 4.85309666406198,
+			city: 'Amsterdam'
 		},
 		{
 			id: 2,
@@ -23,7 +24,8 @@ export const offers: Offer[] = [
 			name: `Wood and stone place`,
 			typeOfApartment:"Private room",
 			latitude: 52.3609553943508,
-			longitude: 4.85309666406198
+			longitude: 4.85309666406198,
+			city: 'Amsterdam'
 		},
 		{
 			id: 3,
@@ -35,7 +37,8 @@ export const offers: Offer[] = [
 			name: `Canal View Prinsengracht`,
 			typeOfApartment:"Apartment",
 			latitude: 52.3909553943508,
-			longitude: 4.929309666406198
+			longitude: 4.929309666406198,
+			city: 'Amsterdam'
 		},
 		{
 			id: 4,
@@ -47,8 +50,35 @@ export const offers: Offer[] = [
 			name: `Nice, cozy, warm big bed apartment`,
 			typeOfApartment:"Apartment",
 			latitude: 52.3809553943508,
-			longitude: 4.939309666406198
-		}
+			longitude: 4.939309666406198,
+			city: 'Amsterdam'
+		},
+		{
+			id: 5,
+			isPremium: true,
+			imgUrl: "../markup/img/apartment-01.jpg",
+			cost: 120,
+			dayOrNight: "night",
+			isBookmarks: true,
+			name: `Hôtel Eiffel Kensington`,
+			typeOfApartment: "Hotel",
+			latitude: 48.85742451893557,
+			longitude: 2.3022979466151656,
+			city: 'Paris'
+		},
+		{
+			id: 6,
+			isPremium: true,
+			imgUrl: "../markup/img/apartment-01.jpg",
+			cost: 120,
+			dayOrNight: "night",
+			isBookmarks: true,
+			name: `Le Lampika Hotel`,
+			typeOfApartment: "Hotel",
+			latitude: 48.83511070661446, 
+			longitude: 2.329586044631438,
+			city: 'Paris'
+		},
 	]
 
 

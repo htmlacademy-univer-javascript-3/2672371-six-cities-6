@@ -9,6 +9,7 @@ type Offer = {
 	typeOfApartment: string;
 	latitude: number;
 	longitude: number;
+	city: string;
 }
 
 export default Offer;
