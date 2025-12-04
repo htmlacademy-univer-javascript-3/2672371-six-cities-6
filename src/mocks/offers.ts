@@ -12,7 +12,8 @@ export const offers: Offer[] = [
 			typeOfApartment: "Apartment",
 			latitude: 52.3909553943508,
 			longitude: 4.85309666406198,
-			city: 'Amsterdam'
+			city: 'Amsterdam',
+			rating: 4.8
 		},
 		{
 			id: 2,
@@ -25,7 +26,8 @@ export const offers: Offer[] = [
 			typeOfApartment:"Private room",
 			latitude: 52.3609553943508,
 			longitude: 4.85309666406198,
-			city: 'Amsterdam'
+			city: 'Amsterdam',
+			rating: 4
 		},
 		{
 			id: 3,
@@ -38,7 +40,8 @@ export const offers: Offer[] = [
 			typeOfApartment:"Apartment",
 			latitude: 52.3909553943508,
 			longitude: 4.929309666406198,
-			city: 'Amsterdam'
+			city: 'Amsterdam',
+			rating: 5
 		},
 		{
 			id: 4,
@@ -51,7 +54,8 @@ export const offers: Offer[] = [
 			typeOfApartment:"Apartment",
 			latitude: 52.3809553943508,
 			longitude: 4.939309666406198,
-			city: 'Amsterdam'
+			city: 'Amsterdam',
+			rating: 3.5
 		},
 		{
 			id: 5,
@@ -64,7 +68,8 @@ export const offers: Offer[] = [
 			typeOfApartment: "Hotel",
 			latitude: 48.85742451893557,
 			longitude: 2.3022979466151656,
-			city: 'Paris'
+			city: 'Paris',
+			rating: 4
 		},
 		{
 			id: 6,
@@ -77,7 +82,8 @@ export const offers: Offer[] = [
 			typeOfApartment: "Hotel",
 			latitude: 48.83511070661446, 
 			longitude: 2.329586044631438,
-			city: 'Paris'
+			city: 'Paris',
+			rating: 5
 		},
 	]
 

@@ -10,6 +10,7 @@ type Offer = {
 	latitude: number;
 	longitude: number;
 	city: string;
+	rating: number;
 }
 
 export default Offer;
