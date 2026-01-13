@@ -5,5 +5,5 @@ enum AppRoute{
 	Offer = '/offer',
 	Error = '/404',
 }
-
+ 
 export default AppRoute;
